@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Posts Recentes</h2>
+    
+    <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{% url 'blog:detalhes' pk=post.pk %}">{{ post.title }}</a> 
+                - {{ post.date_posted|date:"d M Y" }} 
+                <a href="{% url 'blog:atualização' pk=post.pk %}">[Editar]</a>
+                <a href="{% url 'blog:delete' pk=post.pk %}">[Remover]</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

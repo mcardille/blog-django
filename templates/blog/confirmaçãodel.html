@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Confirmação de Remoção</h2>
+    <p>Você tem certeza que deseja remover o post: <strong>{{ post.title }}</strong>?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Sim, Remover</button>
+        <a href="{% url 'blog:detalhes' pk=post.pk %}">Cancelar</a>
+    </form>
+{% endblock %}

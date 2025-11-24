@@ -1,0 +1,33 @@
+
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'blog/css/style.css' %}"> 
+    <title>{% block title %}Chef Hugo Cardille - Blog{% endblock %}</title>
+</head>
+<body>
+<header>
+    <img src="{% static 'blog/images/chef-hat.png' %}" alt="logo de chapeu">
+    <h1>Chef Hugo Cardille</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'blog:listadeposts' %}">Posts</a></li>
+            <li><a href="{% url 'blog:criação' %}">Criar novo post</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+        {% block content %}
+        {% endblock content %}
+</main>
+    <footer>
+        <p>Site atualizado em 2025</p>
+    </footer>
+</body>
+
+</html>
