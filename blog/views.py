@@ -4,7 +4,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from .models import Post
-
+from .forms import Forms
 
 def ListView(request):
     posts = Post.objects.all()
@@ -24,27 +24,26 @@ def DetailView(request, pk):
 
 def CreateView(request):
     if request.method == 'POST':
-       
-        title = request.POST.get('title')
-        content = request.POST.get('content')
-
-        Post.objects.create(title=title, content=content)
-
+        form = Forms(request.POST)
+        if form.is_valid():
+            form.save()
         return redirect('blog:listadeposts') 
+    else:
+        form = Forms()
 
-    return render(request, 'blog/criação.html')
+    return render(request, 'blog/criação.html', {'form': form})
 
 def UpdateView(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
     if request.method == 'POST':
-        post.title = request.POST.get('title')
-        post.content = request.POST.get('content')
-        post.save()
-        return redirect('blog:detalhes', pk=post.pk)
-
-    context = {'post': post}
-    return render(request, 'blog/atualização.html', context)
+        form = Forms(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('blog:detalhes', pk=post.pk)
+    else:
+        form = Forms(instance=post)
+    return render(request, 'blog/atualização.html', {'form': form})
 
 
 def DeleteView(request, pk):

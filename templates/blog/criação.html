@@ -4,11 +4,8 @@
     <h2>Criar Novo Post</h2>
     <form method="POST">
         {% csrf_token %}
-        <label for="title">Título:</label><br>
-        <input type="text" id="title" name="title" required><br><br>
 
-        <label for="content">Conteúdo HTML:</label><br>
-        <textarea id="content" name="content" rows="10" required></textarea><br><br>
+        {{ form.as_p }}
 
         <button type="submit">Salvar Post</button>
     </form>
