@@ -16,7 +16,7 @@ def DetailView(request, pk):
     try:
         post = Post.objects.get(pk=pk) 
     except Post.DoesNotExist:
-        raise Http404("Postagem não encontrada.") 
+        raise Http404("Post não encontrado.") 
 
     context = {'post': post}
     return render(request, 'blog/detalhes.html', context)
@@ -30,7 +30,7 @@ def CreateView(request):
 
         Post.objects.create(title=title, content=content)
 
-        return redirect('blog:listadeposts') # Redireciona para a lista
+        return redirect('blog:listadeposts') 
 
     return render(request, 'blog/criação.html')
 
@@ -42,7 +42,6 @@ def UpdateView(request, pk):
         post.content = request.POST.get('content')
         post.save()
         return redirect('blog:detalhes', pk=post.pk)
-
 
     context = {'post': post}
     return render(request, 'blog/atualização.html', context)
