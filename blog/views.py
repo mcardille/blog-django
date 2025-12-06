@@ -68,3 +68,13 @@ def CommentCreateView(request, post_pk):
         'form': form
     }
     return render(request, 'blog/comment_create.html', context)
+
+class CategoryListView(ListView): 
+    model = Category
+    template_name = 'blog/category_list.html'
+    context_object_name = 'categories'
+    
+class CategoryDetailView(DetailView): # <--- DEVE EXISTIR
+    model = Category
+    template_name = 'blog/category_detail.html'
+    context_object_name = 'category'
