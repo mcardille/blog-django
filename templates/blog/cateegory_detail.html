@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Posts na Categoria: {{ category.name }}</h2>
+    <p>{{ category.description }}</p>
+
+    {% with posts=category.posts.all %}
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a> 
+                    - {{ post.date_posted|date:"d M Y" }} 
+                    <a href="{% url 'blog:post_update' pk=post.pk %}">[Editar]</a>
+                    <a href="{% url 'blog:post_delete' pk=post.pk %}">[Remover]</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endwith %}
+
+    <p><a href="{% url 'blog:category_list' %}">Voltar às Categorias</a></p>
+
+{% endblock content %}

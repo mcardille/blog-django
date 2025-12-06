@@ -68,18 +68,3 @@ def CommentCreateView(request, post_pk):
         'form': form
     }
     return render(request, 'blog/comment_create.html', context)
-
-class CategoryListView(ListView):
-    model = Category
-    template_name = 'blog/category_list.html'
-    context_object_name = 'categories'
-
-class CategoryDetailView(DetailView):
-    model = Category
-    template_name = 'blog/category_detail.html'
-    context_object_name = 'category'
-    def get_object(self, queryset=None):
-        try:
-            return super().get_object(queryset=queryset)
-        except Http404:
-            raise Http404("Essa categoria não existe.")
