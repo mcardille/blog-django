@@ -7,7 +7,7 @@ from django.views.generic import (
 )
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import Http404, HttpResponse
-from .models import Post, Comment
+from .models import Post, Comment, Category
 from .forms import Forms, CommentForm
 from django.contrib.auth.decorators import login_required
 class PostListView(ListView):
@@ -68,3 +68,18 @@ def CommentCreateView(request, post_pk):
         'form': form
     }
     return render(request, 'blog/comment_create.html', context)
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'blog/category_list.html'
+    context_object_name = 'categories'
+
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = 'blog/category_detail.html'
+    context_object_name = 'category'
+    def get_object(self, queryset=None):
+        try:
+            return super().get_object(queryset=queryset)
+        except Http404:
+            raise Http404("Essa categoria não existe.")

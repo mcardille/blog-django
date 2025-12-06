@@ -3,7 +3,13 @@
 {% block content %}
     <h2>{{ post.title }}</h2>
     <small>Postado em: {{ post.date_posted|date:"d M Y, H:i" }}</small>
-
+    <p>
+        Categorias: 
+        {% for category in post.categories.all %}
+            <a href="{% url 'blog:category_detail' pk=category.pk %}">{{ category.name }}</a>
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
     <p>
         <a href="{% url 'blog:atualização' pk=post.pk %}">Editar Post</a> | 
         <a href="{% url 'blog:delete' pk=post.pk %}">Remover Post</a> |
