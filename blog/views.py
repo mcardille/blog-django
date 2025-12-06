@@ -5,8 +5,8 @@ from django.urls import reverse_lazy
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView
 )
-from django.shortcuts import get_object_or_404
-from django.http import Http404
+from django.shortcuts import get_object_or_404, render, redirect
+from django.http import Http404, HttpResponse
 from .models import Post, Comment
 from .forms import Forms, CommentForm
 from django.contrib.auth.decorators import login_required
