@@ -7,8 +7,9 @@ from django.views.generic import (
 )
 from django.shortcuts import get_object_or_404
 from django.http import Http404
-from .models import Post
-
+from .models import Post, Comment
+from .forms import Forms, CommentForm
+from django.contrib.auth.decorators import login_required
 class PostListView(ListView):
     model = Post
     template_name = 'blog/listadeposts.html'
@@ -42,3 +43,28 @@ class PostDeleteView(DeleteView):
     model = Post
     template_name = 'blog/confirmaçãodel.html'
     success_url = reverse_lazy('blog:listadeposts')
+
+@login_required 
+def CommentCreateView(request, post_pk):
+    post = get_object_or_404(Post, pk=post_pk)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False) 
+            comment.post = post
+            comment.autor = request.user 
+            comment.save() 
+
+         
+            return redirect('blog:detalhes', pk=post.pk)
+
+    
+    else:
+        form = CommentForm()
+
+    context = {
+        'post': post,
+        'form': form
+    }
+    return render(request, 'blog/comment_create.html', context)
